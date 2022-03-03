@@ -1,0 +1,1 @@
+enum DatabaseTableTypes { todo, done }
