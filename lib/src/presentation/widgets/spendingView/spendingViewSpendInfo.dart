@@ -26,7 +26,7 @@ class SpendingViewSpendInfo extends StatelessWidget {
         Row(
           children: [
             Text(
-              r"$2,400.56",
+              r"$2,500,000000.56",
               style: AppConfig().themeData.textTheme.headline2,
             ),
             Padding(

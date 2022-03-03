@@ -149,7 +149,76 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width / 40,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Stream Store",
+                    style: AppConfig().themeData.textTheme.headline6,
+                  ),
+                  Text(
+                    r"-$19.99",
+                    style: TextStyle(
+                      fontSize:
+                          AppConfig().themeData.textTheme.headline6!.fontSize,
+                      fontWeight: FontWeight.w700,
+                      color: warning,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width / 40,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Stream Store",
+                    style: AppConfig().themeData.textTheme.headline6,
+                  ),
+                  Text(
+                    r"-$19.99",
+                    style: TextStyle(
+                      fontSize:
+                          AppConfig().themeData.textTheme.headline6!.fontSize,
+                      fontWeight: FontWeight.w700,
+                      color: warning,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width / 40,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Stream Store",
+                    style: AppConfig().themeData.textTheme.headline6,
+                  ),
+                  Text(
+                    r"-$19.99",
+                    style: TextStyle(
+                      fontSize:
+                          AppConfig().themeData.textTheme.headline6!.fontSize,
+                      fontWeight: FontWeight.w700,
+                      color: warning,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

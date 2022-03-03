@@ -87,6 +87,27 @@ class _SpendingPageState extends State<SpendingPage> {
                 ),
                 const SpendingViewSinglePayment(
                   imagePath: "assets/icons/youtube.svg",
+                  paymentName:
+                      "Youtube Red Youtube Red Youtube Red Youtube Red",
+                  nextPayment: "Next payment: 12/02",
+                  payment: 3.99,
+                  backgroundColor: Color(0xFFFE5145),
+                ),
+                const Divider(
+                  color: black40,
+                ),
+                const SpendingViewSinglePayment(
+                  imagePath: "assets/icons/youtube.svg",
+                  paymentName: "Youtube Red",
+                  nextPayment: "Next payment: 12/02",
+                  payment: 3.99,
+                  backgroundColor: Color(0xFFFE5145),
+                ),
+                const Divider(
+                  color: black40,
+                ),
+                const SpendingViewSinglePayment(
+                  imagePath: "assets/icons/youtube.svg",
                   paymentName: "Youtube Red",
                   nextPayment: "Next payment: 12/02",
                   payment: 3.99,
