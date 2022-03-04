@@ -21,7 +21,7 @@ class NewsFeedList extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 24.0),
         child: ListView.builder(
-            itemCount: articleRequestSuccess.totalResults,
+            itemCount: articleRequestSuccess.articles.length,
             itemBuilder: (BuildContext context, int index) {
               return _individualArticleRow(
                 widgetHeight: individualAritcleHeight,

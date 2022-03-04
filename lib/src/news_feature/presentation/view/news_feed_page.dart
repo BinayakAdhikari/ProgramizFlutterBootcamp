@@ -1,12 +1,17 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootcamp/src/config/appConfig.dart';
 import 'package:flutter_bootcamp/src/config/appEnums.dart';
 import 'package:flutter_bootcamp/src/core/presentation/widget/search_bar.dart';
+import 'package:flutter_bootcamp/src/news_feature/data/datasource/article_datasource.dart';
+import 'package:flutter_bootcamp/src/news_feature/data/repository/article_repository_imp.dart';
 import 'package:flutter_bootcamp/src/news_feature/domain/entity/articleEntity.dart';
+import 'package:flutter_bootcamp/src/news_feature/domain/usecase/get_all_article_usecase.dart';
 import 'package:flutter_bootcamp/src/news_feature/presentation/view/news_details_page.dart';
 import 'package:flutter_bootcamp/src/news_feature/presentation/widget/news_feed_header.dart';
 import 'package:flutter_bootcamp/src/news_feature/presentation/widget/news_feed_list.dart';
 import 'package:flutter_bootcamp/src/news_feature/presentation/widget/news_feed_tabs.dart';
+import 'package:flutter_bootcamp/src/service/http_service.dart';
 
 class NewsFeedPage extends StatefulWidget {
   const NewsFeedPage({Key? key}) : super(key: key);
@@ -16,26 +21,23 @@ class NewsFeedPage extends StatefulWidget {
 }
 
 class _NewsFeedPageState extends State<NewsFeedPage> {
-  //! Dummy data
-  ArticleRequestSuccess articleRequestSuccess = ArticleRequestSuccess(
-      1,
-      [
-        ArticleEntity(
-            author: "Antonio G. Di Benedetto",
-            source: Source(id: "the-verge", name: "The Verge"),
-            title:
-                "Apple’s 512GB M1 Mac Mini is back down to its lowest price yet",
-            description:
-                "The over-performing Mac Mini with M1 processor of 2020 matches its Cyber Monday best price at Amazon. We also have great deals on the Samsung Galaxy Chromebook 2, Microsoft Modern Webcam, and the last-gen iPad Pro.",
-            url:
-                "https://www.theverge.com/good-deals/2022/3/3/22958558/apple-mac-mini-m1-ipad-samsung-galaxy-chromebook-2-microsoft-webcam-deal-sale",
-            urlToImage:
-                "https://cdn.vox-cdn.com/thumbor/xPfhXqvDfvmDopD88d2Pp11L_gs=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22045884/cwelch_201114_4292_0004.0.jpg",
-            publishedAt: DateTime.parse("2022-03-03T15:05:21Z"),
-            content:
-                "Plus more deals on a Samsung Chromebook, Microsoft webcam, and more\r\nIf you buy something from a Verge link, Vox Media may earn a commission. See our ethics statement.\r\nPhoto by Chris Welch")
-      ],
-      status: "okay");
+  NewsFeedTabTypes selectedTab = NewsFeedTabTypes.featured;
+
+  late Future<ArticleRequest> getAllArticleUsecase;
+
+  @override
+  void initState() {
+    getAllArticleUsecase = GetAllArticleUsecase(
+      articleRepository: ArticleRepositroyImp(
+        articleDatasourceImp: ArticleDatasourceImp(
+          httpService: HttpService(
+            type: ReleaseTypes.dev,
+          ),
+        ),
+      ),
+    ).execute(type: selectedTab);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,19 +67,61 @@ class _NewsFeedPageState extends State<NewsFeedPage> {
           padding: EdgeInsets.only(bottom: 24.0),
         ),
         NewsFeedTabs(
-          tabClickCallBack: (NewsFeedTabTypes tab) {},
+          tabClickCallBack: (NewsFeedTabTypes tab) {
+            setState(() {
+              selectedTab = tab;
+              getAllArticleUsecase = GetAllArticleUsecase(
+                articleRepository: ArticleRepositroyImp(
+                  articleDatasourceImp: ArticleDatasourceImp(
+                    httpService: HttpService(
+                      type: ReleaseTypes.dev,
+                    ),
+                  ),
+                ),
+              ).execute(type: selectedTab);
+            });
+          },
+          initialTab: selectedTab,
         ),
-        NewsFeedList(
-          articleRequestSuccess: articleRequestSuccess,
-          itemTouchCallback: (ArticleEntity articleEntity) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => NewsDetailsPage(
-                      articleEntity: articleEntity,
-                    )),
-              ),
-            );
+        FutureBuilder(
+          future: getAllArticleUsecase,
+          builder:
+              (BuildContext context, AsyncSnapshot<ArticleRequest> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data is ArticleRequestSuccess) {
+                return NewsFeedList(
+                  articleRequestSuccess:
+                      (snapshot.data as ArticleRequestSuccess),
+                  itemTouchCallback: (ArticleEntity articleEntity) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => NewsDetailsPage(
+                              articleEntity: articleEntity,
+                            )),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Expanded(
+                  child: Center(
+                    child: Text(
+                      (snapshot.data as ArticleRequestFail).message,
+                      style: AppConfig().themeData.textTheme.headline4,
+                    ),
+                  ),
+                );
+              }
+            } else {
+              return const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: primary,
+                  ),
+                ),
+              );
+            }
           },
         ),
       ],

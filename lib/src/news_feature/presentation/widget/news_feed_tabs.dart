@@ -3,12 +3,27 @@ import 'package:flutter_bootcamp/src/config/appConfig.dart';
 
 import '../../../config/appEnums.dart';
 
-class NewsFeedTabs extends StatelessWidget {
+class NewsFeedTabs extends StatefulWidget {
+  final NewsFeedTabTypes initialTab;
   final Function(NewsFeedTabTypes) tabClickCallBack;
   const NewsFeedTabs({
     Key? key,
     required this.tabClickCallBack,
+    required this.initialTab,
   }) : super(key: key);
+
+  @override
+  State<NewsFeedTabs> createState() => _NewsFeedTabsState();
+}
+
+class _NewsFeedTabsState extends State<NewsFeedTabs> {
+  late NewsFeedTabTypes selectedTab;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedTab = widget.initialTab;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +32,21 @@ class NewsFeedTabs extends StatelessWidget {
       children: [
         individualTab(
           type: NewsFeedTabTypes.featured,
-          selected: true,
-          callback: (NewsFeedTabTypes type) {},
+          callback: (NewsFeedTabTypes type) {
+            widget.tabClickCallBack(type);
+          },
         ),
         individualTab(
           type: NewsFeedTabTypes.latest,
-          callback: (NewsFeedTabTypes type) {},
+          callback: (NewsFeedTabTypes type) {
+            widget.tabClickCallBack(type);
+          },
         ),
         individualTab(
           type: NewsFeedTabTypes.trending,
-          callback: (NewsFeedTabTypes type) {},
+          callback: (NewsFeedTabTypes type) {
+            widget.tabClickCallBack(type);
+          },
         ),
       ],
     );
@@ -34,11 +54,11 @@ class NewsFeedTabs extends StatelessWidget {
 
   Widget individualTab({
     required NewsFeedTabTypes type,
-    bool selected = false,
     required Function(NewsFeedTabTypes type) callback,
   }) {
     late String title;
     late TextAlign align;
+    bool selected = (type == selectedTab);
     switch (type) {
       case NewsFeedTabTypes.featured:
         title = "Featured";
@@ -61,17 +81,30 @@ class NewsFeedTabs extends StatelessWidget {
       child: InkWell(
         onTap: () {
           callback(type);
+          setState(() {
+            selectedTab = type;
+          });
         },
-        child: Text(
-          title,
-          textAlign: align,
-          style: selected
-              ? AppConfig().themeData.textTheme.headline2
-              : TextStyle(
-                  fontSize: AppConfig().themeData.textTheme.headline2!.fontSize,
-                  fontWeight: FontWeight.w500,
-                  color: greyLighter,
-                ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            title,
+            textAlign: align,
+            style: selected
+                ? TextStyle(
+                    fontSize:
+                        AppConfig().themeData.textTheme.headline2!.fontSize,
+                    fontWeight:
+                        AppConfig().themeData.textTheme.headline2!.fontWeight,
+                    color: primary,
+                  )
+                : TextStyle(
+                    fontSize:
+                        AppConfig().themeData.textTheme.headline2!.fontSize,
+                    fontWeight: FontWeight.w500,
+                    color: greyLighter,
+                  ),
+          ),
         ),
       ),
     );

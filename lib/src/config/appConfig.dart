@@ -51,3 +51,4 @@ const Color whiteDarker = Color(0xFFeeeeee);
 
 // Default variables
 const int averageReadSpeed = 200;
+const String baseUrl = "https://newsapi.org/v2/";

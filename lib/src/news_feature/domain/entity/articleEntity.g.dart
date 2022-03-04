@@ -7,7 +7,7 @@ part of 'articleEntity.dart';
 // **************************************************************************
 
 Source _$SourceFromJson(Map<String, dynamic> json) => Source(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
     );
 
@@ -18,7 +18,7 @@ Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
 
 ArticleEntity _$ArticleEntityFromJson(Map<String, dynamic> json) =>
     ArticleEntity(
-      author: json['author'] as String,
+      author: json['author'] as String?,
       source: Source.fromJson(json['source'] as Map<String, dynamic>),
       title: json['title'] as String,
       description: json['description'] as String,

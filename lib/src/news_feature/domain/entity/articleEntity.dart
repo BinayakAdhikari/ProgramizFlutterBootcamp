@@ -11,10 +11,10 @@ abstract class ArticleRequest {
 
 @JsonSerializable()
 class Source {
-  final String id;
+  final String? id;
   final String name;
 
-  Source({required this.id, required this.name});
+  Source({this.id, required this.name});
 
   factory Source.fromJson(Map<String, dynamic> data) => _$SourceFromJson(data);
 
@@ -24,7 +24,7 @@ class Source {
 @JsonSerializable()
 class ArticleEntity {
   final Source source;
-  final String author;
+  final String? author;
   final String title;
   final String description;
   final String url;
@@ -33,7 +33,7 @@ class ArticleEntity {
   final String content;
 
   ArticleEntity({
-    required this.author,
+    this.author,
     required this.source,
     required this.title,
     required this.description,
@@ -72,4 +72,9 @@ class ArticleRequestFail extends ArticleRequest {
     required this.code,
     required this.message,
   }) : super(status: status);
+
+  factory ArticleRequestFail.fromJson(Map<String, dynamic> data) =>
+      _$ArticleRequestFailFromJson(data);
+
+  Map<String, dynamic> toJson() => _$ArticleRequestFailToJson(this);
 }
