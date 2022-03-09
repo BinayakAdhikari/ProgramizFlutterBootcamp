@@ -15,7 +15,7 @@ class WeatherRepositoryImp extends WeatherRepositroy {
   Future<Either<NetworkFailure, WeatherEntity>> getWeatherStats(
       {required double lat, required double long}) async {
     Either<NetworkFailure, WeatherModel> result =
-        await datasource.service.getWeatherForCity(lat: lat, long: long);
+        await datasource.getWeather(lat: lat, long: long);
 
     return result.fold((networkFailure) {
       return Left(networkFailure);
@@ -62,6 +62,67 @@ class WeatherRepositoryImp extends WeatherRepositroy {
         dailyStats: dailyStats,
       );
       return Right(entity);
+    });
+  }
+
+  @override
+  Future<Either<NetworkFailure, List<WeatherEntity>>> getWeathersStats(
+      {required List<Map<String, double>> locations}) async {
+    Either<NetworkFailure, List<WeatherModel>> result =
+        await datasource.getWeatherForCities(locations: locations);
+
+    return result.fold((failure) {
+      return Left(failure);
+    }, (listOfModels) {
+      List<WeatherEntity> entities = [];
+      for (WeatherModel weatherModel in listOfModels) {
+        List<Weather> weather = [];
+        List<DailyStats> dailyStats = [];
+
+        for (WeatherDescriptionModel modelDesc
+            in weatherModel.current.weather) {
+          weather.add(
+            Weather(
+                weather: modelDesc.main, description: modelDesc.description),
+          );
+        }
+
+        for (DailyWeatherModel modelDaily in weatherModel.daily) {
+          List<Weather> dailyWeather = [];
+          for (WeatherDescriptionModel model in modelDaily.weather) {
+            dailyWeather.add(
+              Weather(weather: model.main, description: model.description),
+            );
+          }
+          dailyStats.add(
+            DailyStats(
+              dateTime: DateTime.fromMillisecondsSinceEpoch(modelDaily.dt),
+              sunrise: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunrise),
+              sunset: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunset),
+              humidity: modelDaily.humidity,
+              weather: dailyWeather,
+            ),
+          );
+        }
+
+        WeatherEntity entity = WeatherEntity(
+          city: weatherModel.timezone.split('/')[1],
+          currentStats: CurrentStats(
+              currentTemp: weatherModel.current.temp,
+              dateTime:
+                  DateTime.fromMillisecondsSinceEpoch(weatherModel.current.dt),
+              humidity: weatherModel.current.humidity,
+              sunrise: DateTime.fromMillisecondsSinceEpoch(
+                  weatherModel.current.sunrise),
+              sunset: DateTime.fromMillisecondsSinceEpoch(
+                  weatherModel.current.sunset),
+              weather: weather),
+          dailyStats: dailyStats,
+        );
+
+        entities.add(entity);
+      }
+      return Right(entities);
     });
   }
 }

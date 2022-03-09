@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bootcamp/src/services/http_service.dart';
 import 'package:flutter_bootcamp/src/weather_feature/data/datasource/weather_datasource.dart';
 import 'package:flutter_bootcamp/src/weather_feature/data/repository/weather_repository.dart';
 import 'package:flutter_bootcamp/src/weather_feature/domain/usecase/weather_usecase.dart';
+import 'package:flutter_bootcamp/src/weather_feature/presentation/bloc/bloc/weather_bloc.dart';
 import 'package:flutter_bootcamp/src/weather_feature/presentation/widget/weather_home_header.dart';
 import 'package:flutter_bootcamp/src/weather_feature/presentation/widget/weather_home_locations_list.dart';
 import 'package:flutter_bootcamp/src/weather_feature/presentation/widget/weather_home_search_block.dart';
@@ -19,20 +21,25 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   @override
   void initState() {
-    test();
-    super.initState();
-  }
-
-  void test() async {
-    GetWeatherUsecase usecase = GetWeatherUsecase(
-      lat: 20,
-      long: 134,
-      repositroy: WeatherRepositoryImp(
-        datasource: WeatherDatasourceImp(
-          service: HttpService(),
-        ),
+    BlocProvider.of<WeatherBloc>(context).add(
+      RequestAllWeather(
+        locations: const [
+          {
+            "lat": 40.76583209139806,
+            'lon': -73.98726723081923,
+          },
+          {
+            "lat": 1.285490278988715,
+            'lon': 103.86005825133329,
+          },
+          {
+            "lat": 28.203148405741434,
+            'lon': 83.98809517732442,
+          },
+        ],
       ),
     );
+    super.initState();
   }
 
   @override

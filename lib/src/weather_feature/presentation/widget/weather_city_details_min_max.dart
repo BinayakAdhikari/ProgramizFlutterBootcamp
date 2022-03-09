@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../config/appConfig.dart';
 
 class WeatherCityDetailsMinMax extends StatelessWidget {
-  const WeatherCityDetailsMinMax({Key? key}) : super(key: key);
+  final double? maxTemp;
+  final double? minTemp;
+  const WeatherCityDetailsMinMax({Key? key, this.maxTemp = 0, this.minTemp = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class WeatherCityDetailsMinMax extends StatelessWidget {
               ),
             ),
             Text(
-              "33°",
+              "$maxTemp°",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.headline3!.fontSize,
                 fontWeight:
@@ -47,7 +50,7 @@ class WeatherCityDetailsMinMax extends StatelessWidget {
               ),
             ),
             Text(
-              "33°",
+              "$minTemp°",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.headline3!.fontSize,
                 fontWeight:

@@ -12,6 +12,8 @@ abstract class WeatherDatasource {
 
   Future<Either<NetworkFailure, WeatherModel>> getWeather(
       {required double lat, required long});
+  Future<Either<NetworkFailure, List<WeatherModel>>> getWeatherForCities(
+      {required List<Map<String, double>> locations});
 }
 
 class WeatherDatasourceImp extends WeatherDatasource {
@@ -22,5 +24,11 @@ class WeatherDatasourceImp extends WeatherDatasource {
   Future<Either<NetworkFailure, WeatherModel>> getWeather(
       {required double lat, required long}) async {
     return await service.getWeatherForCity(lat: lat, long: long);
+  }
+
+  @override
+  Future<Either<NetworkFailure, List<WeatherModel>>> getWeatherForCities(
+      {required List<Map<String, double>> locations}) async {
+    return await service.getWeatherForCities(locations: locations);
   }
 }

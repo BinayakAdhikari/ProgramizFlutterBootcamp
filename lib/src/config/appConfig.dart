@@ -54,5 +54,8 @@ const Color pureWhite = Color(0xFFFFFFFF);
 const Color whiteLight = Color(0xFFf0f0f0);
 const Color white = Color(0xFFededed);
 
+const Color rain = Color(0x6649eff2);
+const Color cloud = Color(0x668f8f8f);
+const Color sun = Color(0x66fff5a6);
 // Urls
 const String baseUrl = "https://api.openweathermap.org/data/2.5/onecall";

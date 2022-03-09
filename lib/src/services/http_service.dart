@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 class HttpService {
   Uri _getEndpointUri({required double lat, required double long}) {
     return Uri.parse(baseUrl +
-        "?lat=${lat.toString()}&lon=${long.toString()}&exclude=minutely,hourly&appid=49b10fdee63dcedd33bdd8e327ad3c8f");
+        "?lat=${lat.toString()}&lon=${long.toString()}&exclude=minutely,hourly&units=metric&appid=49b10fdee63dcedd33bdd8e327ad3c8f");
   }
 
   Future<Either<NetworkFailure, WeatherModel>> getWeatherForCity(
@@ -27,6 +27,38 @@ class HttpService {
             message: 'Something went wrong',
             statusCode: response.statusCode,
           ),
+        );
+      }
+    } catch (e) {
+      return Left(
+        NetworkFailure(
+          message: e.toString(),
+          statusCode: 400,
+        ),
+      );
+    }
+  }
+
+  Future<Either<NetworkFailure, List<WeatherModel>>> getWeatherForCities(
+      {required List<Map<String, double>> locations}) async {
+    try {
+      List<WeatherModel> models = [];
+      for (Map<String, double> map in locations) {
+        if (map['lat'] != null && map['lon'] != null) {
+          http.Response response = await http
+              .get(_getEndpointUri(lat: map["lat"]!, long: map["lon"]!));
+          models.add(
+            WeatherModel.fromJson(
+              jsonDecode(response.body),
+            ),
+          );
+        }
+      }
+      if (models.isNotEmpty) {
+        return Right(models);
+      } else {
+        return Left(
+          NetworkFailure(message: "Could not find the cities", statusCode: 404),
         );
       }
     } catch (e) {

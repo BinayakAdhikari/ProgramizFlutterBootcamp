@@ -3,7 +3,17 @@ import 'package:flutter/material.dart';
 import '../../../config/appConfig.dart';
 
 class WeatherCityDetailsDayStats extends StatelessWidget {
-  const WeatherCityDetailsDayStats({Key? key}) : super(key: key);
+  final double windSpeed;
+  final DateTime sunrise;
+  final DateTime sunset;
+  final int humidity;
+  const WeatherCityDetailsDayStats(
+      {Key? key,
+      required this.windSpeed,
+      required this.sunrise,
+      required this.sunset,
+      required this.humidity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,7 @@ class WeatherCityDetailsDayStats extends StatelessWidget {
               ),
             ),
             Text(
-              "2.06m/s",
+              "${windSpeed.toString()}m/s",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.bodyText1!.fontSize,
                 fontWeight:
@@ -44,7 +54,7 @@ class WeatherCityDetailsDayStats extends StatelessWidget {
               ),
             ),
             Text(
-              "06:09 AM",
+              "${sunrise.hour.toString().padLeft(2, '0')}:${sunrise.minute.toString().padRight(2, '0')}",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.bodyText1!.fontSize,
                 fontWeight:
@@ -66,7 +76,7 @@ class WeatherCityDetailsDayStats extends StatelessWidget {
               ),
             ),
             Text(
-              "05:29 PM",
+              "${sunset.hour.toString().padLeft(2, '0')}:${sunset.minute.toString().padRight(2, '0')}",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.bodyText1!.fontSize,
                 fontWeight:
@@ -88,7 +98,7 @@ class WeatherCityDetailsDayStats extends StatelessWidget {
               ),
             ),
             Text(
-              "15%",
+              "$humidity%",
               style: TextStyle(
                 fontSize: AppConfig().themeData.textTheme.bodyText1!.fontSize,
                 fontWeight:
