@@ -19,6 +19,11 @@ class WeatherHome extends StatefulWidget {
 class _WeatherHomeState extends State<WeatherHome> {
   @override
   void initState() {
+    test();
+    super.initState();
+  }
+
+  void test() async {
     GetWeatherUsecase usecase = GetWeatherUsecase(
       lat: 20,
       long: 134,
@@ -28,8 +33,6 @@ class _WeatherHomeState extends State<WeatherHome> {
         ),
       ),
     );
-    usecase.execute();
-    super.initState();
   }
 
   @override

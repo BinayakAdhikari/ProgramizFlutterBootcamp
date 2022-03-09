@@ -14,7 +14,7 @@ abstract class WeatherStatistics {
   final DateTime sunrise;
   final DateTime sunset;
   final int humidity;
-  final Weather weather;
+  final List<Weather> weather;
 
   WeatherStatistics(
       {required this.dateTime,
@@ -32,7 +32,7 @@ class CurrentStats extends WeatherStatistics {
       required DateTime sunrise,
       required DateTime sunset,
       required int humidity,
-      required Weather weather})
+      required List<Weather> weather})
       : super(
           dateTime: dateTime,
           sunrise: sunrise,
@@ -48,7 +48,7 @@ class DailyStats extends WeatherStatistics {
       required DateTime sunrise,
       required DateTime sunset,
       required int humidity,
-      required Weather weather})
+      required List<Weather> weather})
       : super(
           dateTime: dateTime,
           sunrise: sunrise,
