@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bootcamp/src/weather_feature/domain/entity/weather_entity.dart';
 
 import '../../../config/appConfig.dart';
 
 class WeatherCityDetailsWeeklyIndicator extends StatelessWidget {
-  const WeatherCityDetailsWeeklyIndicator({Key? key}) : super(key: key);
+  final AsyncSnapshot<WeatherEntity> entitySnapshot;
+  const WeatherCityDetailsWeeklyIndicator(
+      {Key? key, required this.entitySnapshot})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Fix
+    if (entitySnapshot.hasData) {
+      print(entitySnapshot.data!.dailyStats.length);
+      print(entitySnapshot.data!.dailyStats.first.temp.max);
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

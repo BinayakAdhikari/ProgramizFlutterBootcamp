@@ -43,8 +43,10 @@ class CurrentStats extends WeatherStatistics {
 }
 
 class DailyStats extends WeatherStatistics {
+  final Temperature temp;
   DailyStats(
-      {required DateTime dateTime,
+      {required this.temp,
+      required DateTime dateTime,
       required DateTime sunrise,
       required DateTime sunset,
       required int humidity,

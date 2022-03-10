@@ -103,7 +103,8 @@ class WeatherCityDetailPage extends StatelessWidget {
                       color: pureWhite,
                     ),
                   ),
-                  const WeatherCityDetailsWeeklyIndicator(), //! Requires model fix
+                  WeatherCityDetailsWeeklyIndicator(
+                      entitySnapshot: snapshot), //! Requires model fix
                   const Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: 24,

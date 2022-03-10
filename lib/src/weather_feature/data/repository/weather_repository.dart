@@ -41,6 +41,10 @@ class WeatherRepositoryImp extends WeatherRepositroy {
             dateTime: DateTime.fromMillisecondsSinceEpoch(modelDaily.dt),
             sunrise: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunrise),
             sunset: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunset),
+            temp: Temperature(
+                day: modelDaily.temp.day,
+                max: modelDaily.temp.max,
+                min: modelDaily.temp.min),
             humidity: modelDaily.humidity,
             weather: dailyWeather,
           ),
@@ -100,6 +104,10 @@ class WeatherRepositoryImp extends WeatherRepositroy {
               sunrise: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunrise),
               sunset: DateTime.fromMillisecondsSinceEpoch(modelDaily.sunset),
               humidity: modelDaily.humidity,
+              temp: Temperature(
+                  day: modelDaily.temp.day,
+                  max: modelDaily.temp.max,
+                  min: modelDaily.temp.min),
               weather: dailyWeather,
             ),
           );
