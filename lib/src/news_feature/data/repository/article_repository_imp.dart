@@ -7,7 +7,6 @@ class ArticleRepositroyImp extends ArticleRepository {
   final ArticleDatasourceImp articleDatasourceImp;
 
   ArticleRepositroyImp({required this.articleDatasourceImp});
-  //
   @override
   Future<ArticleRequest> getAllArticleRequest(
       {required NewsFeedTabTypes type}) async {
