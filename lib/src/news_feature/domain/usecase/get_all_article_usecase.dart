@@ -10,4 +10,8 @@ class GetAllArticleUsecase {
   Future<ArticleRequest> execute({required NewsFeedTabTypes type}) async {
     return await articleRepository.getAllArticleRequest(type: type);
   }
+
+  String execute2() {
+    return "tets";
+  }
 }
