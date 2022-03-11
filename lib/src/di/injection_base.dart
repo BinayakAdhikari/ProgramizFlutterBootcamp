@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bootcamp/src/services/authentication_serivce.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 
@@ -15,10 +16,10 @@ abstract class InjectionBase {
 }
 
 class InjectionModule extends InjectionBase {
-  static final InjectionModule _InjectionModule = InjectionModule._internal();
+  static final InjectionModule _injectionModule = InjectionModule._internal();
 
   factory InjectionModule() {
-    return _InjectionModule;
+    return _injectionModule;
   }
 
   InjectionModule._internal() {
@@ -27,7 +28,9 @@ class InjectionModule extends InjectionBase {
 
   @override
   void configure(Injector injector) {
-    injector.map<AuthenticationService>((injector) => AuthenticationService(),
+    injector.map<AuthenticationService>(
+        (injector) =>
+            AuthenticationService(firebaseAuth: FirebaseAuth.instance),
         isSingleton: true);
   }
 }

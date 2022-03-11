@@ -1,5 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class AuthenticationService {
-  void login() {
-    print("Logged in");
+  final FirebaseAuth firebaseAuth;
+
+  AuthenticationService({required this.firebaseAuth});
+  Future<UserCredential?> login(
+      {required String email, required String password}) async {
+    try {
+      return await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return null;
+    }
   }
 }

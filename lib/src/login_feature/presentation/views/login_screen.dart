@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootcamp/src/config/appConfig.dart';
 import 'package:flutter_bootcamp/src/core/presentation/views/home_page.dart';
 import 'package:flutter_bootcamp/src/core/presentation/widgets/custom_button.dart';
 import 'package:flutter_bootcamp/src/core/presentation/widgets/text_input_bar.dart';
+import 'package:flutter_bootcamp/src/di/injection_base.dart';
+import 'package:flutter_bootcamp/src/services/authentication_serivce.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -63,7 +66,11 @@ class LoginScreen extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 42),
                 child: CustomButton(
-                  callback: () {
+                  callback: () async {
+                    final creds = await InjectionModule()
+                        .get<AuthenticationService>()
+                        .login(
+                            email: 'raister21@gmail.com', password: 'waduhek');
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
