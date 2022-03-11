@@ -1,14 +1,46 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootcamp/src/config/appConfig.dart';
 import 'package:flutter_bootcamp/src/core/presentation/views/home_page.dart';
 import 'package:flutter_bootcamp/src/core/presentation/widgets/custom_button.dart';
 import 'package:flutter_bootcamp/src/core/presentation/widgets/text_input_bar.dart';
 import 'package:flutter_bootcamp/src/di/injection_base.dart';
+import 'package:flutter_bootcamp/src/login_feature/data/datasource/login_datasource.dart';
+import 'package:flutter_bootcamp/src/login_feature/data/repository/login_repository.dart';
+import 'package:flutter_bootcamp/src/login_feature/presentation/blocs/auth_bloc.dart';
+import 'package:flutter_bootcamp/src/login_feature/usecases/login_usecase.dart';
 import 'package:flutter_bootcamp/src/services/authentication_serivce.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late LoginUsecase loginUsecase;
+  late AuthBloc bloc;
+
+  @override
+  void initState() {
+    bloc = InjectionModule().get<AuthBloc>();
+
+    loginUsecase = LoginUsecase(
+      repository: LoginRepoistoryImp(
+        loginDatasource: LoginDatasourceImp(
+            authenticationService:
+                InjectionModule().get<AuthenticationService>()),
+      ),
+    );
+
+    bloc.authenticationStream.listen((event) {
+      if (event != null) {
+        Navigator.pushNamed(context, HomePage.routeName, arguments: event);
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +98,9 @@ class LoginScreen extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(bottom: 42),
                 child: CustomButton(
-                  callback: () async {
-                    final creds = await InjectionModule()
-                        .get<AuthenticationService>()
-                        .login(
-                            email: 'raister21@gmail.com', password: 'waduhek');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const HomePage()),
-                      ),
-                    );
+                  callback: () {
+                    bloc.login(
+                        email: "raister21@gmail.com", password: "waduhek");
                   },
                 )),
           ),

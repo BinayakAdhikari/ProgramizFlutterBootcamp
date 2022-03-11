@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bootcamp/src/di/injection_base.dart';
 
 import 'package:flutter_bootcamp/src/login_feature/presentation/views/login_screen.dart';
-import 'package:flutter_bootcamp/src/services/authentication_serivce.dart';
+import 'package:flutter_bootcamp/src/routes/route_generator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final RouteGenerator _routeGenerator = RouteGenerator();
   @override
   void initState() {
     super.initState();
@@ -28,9 +29,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      onGenerateRoute: _routeGenerator.generateRoute,
     );
   }
 }
