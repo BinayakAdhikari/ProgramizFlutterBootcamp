@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.3
+  flutter_simple_dependency_injection: ^2.0.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -67,7 +68,6 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Bold.ttf
-        - asset: assets/fonts/Poppins-ExtraBold.ttf
         - asset: assets/fonts/Poppins-ExtraLight.ttf
         - asset: assets/fonts/Poppins-Light.ttf
         - asset: assets/fonts/Poppins-Medium.ttf
