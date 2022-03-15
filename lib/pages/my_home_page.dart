@@ -9,15 +9,8 @@ class MyHomePage extends StatelessWidget {
         title: Text(F.title),
       ),
       body: Center(
-        child: Column(
-          children: [
-            Text(
-              'Hello ${F.title}',
-            ),
-            Text(
-              'Url is ${F.url}',
-            ),
-          ],
+        child: Text(
+          'Hello ${F.title}',
         ),
       ),
     );

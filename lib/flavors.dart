@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 enum Flavor {
   DEV,
   STAGE,
@@ -22,16 +26,16 @@ class F {
     }
   }
 
-  static String get url {
+  static Color get color {
     switch (appFlavor) {
       case Flavor.DEV:
-        return "development.com";
+        return const Color.fromARGB(221, 247, 65, 65);
       case Flavor.STAGE:
-        return "stage.com";
+        return const Color.fromARGB(240, 44, 216, 247);
       case Flavor.PROD:
-        return "production.com";
+        return const Color.fromARGB(221, 78, 247, 26);
       default:
-        return "google.com";
+        return const Color.fromARGB(221, 26, 26, 26);
     }
   }
 }
