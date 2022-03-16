@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "385942181619",
+    "project_id": "bootcamp-in-app-purchase",
+    "storage_bucket": "bootcamp-in-app-purchase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385942181619:android:ba00676b8c5c3126bf0986",
+        "android_client_info": {
+          "package_name": "com.programiz.flutter_bootcamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385942181619-b3kpc385pc3mbp1mnhpgs973adau0eg1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO_Idumrt9bAJgpmw63D8wqrUMsCRtw2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385942181619-b3kpc385pc3mbp1mnhpgs973adau0eg1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
