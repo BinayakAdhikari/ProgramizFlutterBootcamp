@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/src/store_kit_wrappers/sk_payment_queue_wrapper.dart';
 import 'package:in_app_purchase_storekit/src/store_kit_wrappers/sk_payment_transaction_wrappers.dart';
+import 'package:in_app_purchase_storekit/src/store_kit_wrappers/sk_storefront_wrapper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -67,9 +68,12 @@ class _HomePageState extends State<HomePage> {
           // } else {
           //   _handleInvalidPurchase(purchaseDetails);
           // }
+          purchaseDetails.pendingCompletePurchase;
         }
         if (purchaseDetails.pendingCompletePurchase) {
-          await InAppPurchase.instance.completePurchase(purchaseDetails);
+          await InAppPurchase.instance
+              .completePurchase(purchaseDetails)
+              .onError((error, stackTrace) => print(error));
         }
       }
     });
